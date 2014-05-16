@@ -27,7 +27,38 @@ for my $ws ( $workbook->worksheets() ) {
         my $key = $1;
         my ($col_min, $col_max) = $ws->col_range();
         my ($row_min, $row_max) = $ws->row_range();
-        if (($col_max - $col_min) < 9 || ($row_max-$row_min) < 3) { next; }
+        if (($col_max - $col_min) < 3 || ($row_max-$row_min) < 3) { next; }
+
+        my $col_start = -1;
+        my $col_end = -1;
+
+        my $tmpc = -1;
+
+        while ($col_start < 0 || $col_end < 0) {
+            $tmpc++;
+
+            if ($tmpc > $col_max) {
+                if ($col_start > -1) {
+                    $col_end = $col_max;
+                    next;
+                } else {
+                    die;
+                }
+            }
+
+            if ($col_start > -1 &&
+                (!($ws->get_cell(1,$tmpc))
+                 || $ws->get_cell(1,$tmpc)->unformatted() =~ /^\s*$/)) {
+                $col_end = $tmpc-1;
+            }
+            next unless $ws->get_cell(1, $tmpc);
+            if ($ws->get_cell(1,$tmpc)->unformatted() =~ /V\s\(V\)/i
+                    && $col_start < 0) {
+                $col_start = $tmpc;
+            }
+        }
+        # print join(", ", ($key, $col_start, $col_end, $row_min, $row_max)) . "\n";
+        # next;
 
         $data->{$key}->{"V"} = ();
         $data->{$key}->{"I"} = ();
@@ -38,9 +69,9 @@ for my $ws ( $workbook->worksheets() ) {
             next unless $ws->get_cell($row, $col_min);
             next unless $ws->get_cell($row, $col_min)->unformatted() ne "";
             my $kc = 0;
-            my $V = $ws->get_cell($row, $col_min)->unformatted() + 0;
+            my $V = $ws->get_cell($row, $col_start)->unformatted() + 0;
             $data->{$key}->{"V"}[$kr] = $V;
-            for my $col (($col_min + 1) .. ($col_min + 8)) {
+            for my $col (($col_start + 1) .. ($col_end)) {
                 my $I = $ws->get_cell($row, $col)->unformatted() + 0;
                 $data->{$key}->{"I"}[$kr][$kc] = $I;
                 $kc++;
