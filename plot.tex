@@ -1,0 +1,85 @@
+\documentclass[tikz]{standalone}
+\usepackage{stix}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{xfrac}
+\usepackage{bm}
+\usepackage[use-xspace=true,redefine-symbols=false,range-units=single]{siunitx}
+\sisetup{detect-all}
+\edef\dtapth{A1_9_abs.csv}
+
+\pgfplotsset{
+  compat=1.10,
+  width=8.8cm,
+  label style={font=\large},
+  tick label style={font=\normalsize},
+  every axis/.append style={
+    very thick,
+    line cap=rect,
+    tick style={very thick,line cap=rect,black}
+  }
+}
+% \usepackage{pgfplotstable}
+\begin{document}
+\begin{tikzpicture}
+  \begin{semilogyaxis}[
+    %scale only axis,
+    %axis x line*=bottom,
+    xmin=-1.2,xmax=1.2,
+    xtick = {-1.2,-0.8,...,1.2},
+    xticklabels = {%
+      $-1.2$,
+      $-0.8$,
+      $-0.4$,
+      $0.0$,
+      $1.4$,
+      $1.8$,
+      $1.2$
+    },
+    minor xtick={-1.2,-1.0,...,1.2},
+    xlabel={\textbf{Potential
+        \(\bm{\left( V \right)}\)
+        \(\bm{\left[ \protect{\si{\V}} \right]}\)}},
+    ymin=1e-9,ymax=0.01,
+    ytickten = {-9,-8,...,-2},
+    % yticklabels = {%
+    %   $-1.0$,
+    %   $-0.5$,
+    %   $0.0$,
+    %   $0.5$,
+    %   $1.0$
+    % },
+    % minor ytick = {-1.1,-1,...,1.1},
+    ylabel={\textbf{Current
+        \(\bm{\left( I \right)}\)
+        \(\bm{\left[ \protect{\si{\A}} \right]}\)}},
+    legend style = {font={\footnotesize},cells={anchor=west}},
+    legend pos = north west
+    ]
+    \addplot+[mark={Mercedes star},only marks,mark
+    options={scale=0.1},black]
+    table [x index=0,y index=1,col sep=comma]{\dtapth};
+    \addlegendentry{Measured}
+    \addplot+[no markers,smooth,lightgray]
+    table [x index=0,y index=2,col sep=comma]{\dtapth};
+    \addlegendentry{Initial}
+    \addplot+[no markers,smooth,blue]
+    table [x index=0,y index=3,col sep=comma]{\dtapth};
+    \addlegendentry{log / lin}
+    \addplot+[no markers,smooth,green]
+    table [x index=0,y index=4,col sep=comma]{\dtapth};
+    \addlegendentry{\%  / exp}
+    \addplot+[no markers,smooth,red]
+    table [x index=0,y index=5,col sep=comma]{\dtapth};
+    \addlegendentry{log / lin}
+    \addplot+[no markers,smooth, orange]
+    table [x index=0,y index=6,col sep=comma]{\dtapth};
+    \addlegendentry{\% / exp}
+  \end{semilogyaxis}
+\end{tikzpicture}
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
