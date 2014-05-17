@@ -1,4 +1,4 @@
-function res = initialFit(v,i,w)
+function res = initialFit(v,i,w,phit)
   % w is the number of points, like a boxcar average of sorts
 
   kp = find(v>0);
@@ -29,4 +29,63 @@ function res = initialFit(v,i,w)
   res.A = A;
   res.B = B;
   res.C = C;
+  res.i0 = exp(A(2,:))';
+  res.n = 1./(res.A(1,:).*phit)';
+  res.Rs = 1./res.C(1,:)';
+  res.Rsh = 1./res.B(1,:)';
+
+  res.est = struct;
+
+  % Est I0
+  d1 = dydx(res.vA,spline(res.vA,res.A(2,:)'),1);
+  lmin = find((d1(w:end)>0).*(d1(1:(end-w+1))));
+  if (isempty(lmin))
+    res.est.kri0 = 1:w;
+    vm = median(res.A(2,res.est.kri0),2);
+    [v,k] = min((res.A(2,res.est.kri0)-vm).^2,[],2);
+    v = A(2,res.est.kri0(k));
+  else
+    res.est.kri0 = (floor(w/2):1:w)+median(lmin);
+    [v,k] = min(res.A(2,res.est.kri0),[],2);
+  endif
+  res.est.ki0 = res.est.kri0(k);
+  res.est.i0 = exp(v);
+
+  % Est n
+  d1 = dydx(res.vA,spline(res.vA,res.n),1);
+  lmin = find((d1(w:end)>0).*(d1(1:(end-w+1))));
+  if (isempty(lmin))
+    res.est.krn = 1:w;
+    vm = median(res.n(res.est.krn,1));
+    [v,k] = min((res.n(res.est.krn,1)-vm).^2);
+    v = res.n(res.est.krn(k));
+  else
+    res.est.knr = (floor(w/2):1:w)+median(lmin);
+    [v,k] = min(res.n(res.est.krn,1));
+  endif
+  res.est.kn = res.est.krn(k);
+  res.est.n = v;
+
+  % Est Rs
+  kr = find(res.Rs>0);
+  if (isempty(kr))
+    [res.est.Rs,k] = min(res.Rs(kr,1));
+    res.est.kRs = kr(k);
+  else
+    res.est.Rs = res.Rs(end-w);
+    res.est.kRs = length(res.Rs)-w;
+  endif
+
+  % Est Rsh
+  kr = find(res.Rsh>0);
+  if (isempty(kr))
+    vm = median(log(res.Rsh(kr,1)));
+    [v,k] min((log(res.Rsh(kr,1))-vm).^2);
+    res.est.Rsh = res.Rsh(kr(k));
+    res.est.kRsh = kr(k);
+  else
+    res.est.Rsh = res.Rsh(w);
+    res.est.kRsh = w;
+  endif
+
 endfunction
