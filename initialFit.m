@@ -45,7 +45,9 @@ function res = initialFit(v,i,w,phit)
     [v,k] = min((res.A(2,res.est.kri0)-vm).^2,[],2);
     v = A(2,res.est.kri0(k));
   else
-    res.est.kri0 = (floor(w/2):1:w)+median(lmin);
+    rlow = max(-w+floor(median(lmin)),1);
+    rhigh = min(ceil(w./2)+ceil(median(lmin)),length(res.i0));
+    res.est.kri0 = rlow:1:rhigh;
     [v,k] = min(res.A(2,res.est.kri0),[],2);
   endif
   res.est.ki0 = res.est.kri0(k);
@@ -60,7 +62,9 @@ function res = initialFit(v,i,w,phit)
     [v,k] = min((res.n(res.est.krn,1)-vm).^2);
     v = res.n(res.est.krn(k));
   else
-    res.est.knr = (floor(w/2):1:w)+median(lmin);
+    rlow = max(-w+floor(median(lmin)),1);
+    rhigh = min(ceil(w./2)+ceil(median(lmin)),length(res.n));
+    res.est.krn = rlow:1:rhigh;
     [v,k] = min(res.n(res.est.krn,1));
   endif
   res.est.kn = res.est.krn(k);
@@ -69,23 +73,23 @@ function res = initialFit(v,i,w,phit)
   % Est Rs
   kr = find(res.Rs>0);
   if (isempty(kr))
-    [res.est.Rs,k] = min(res.Rs(kr,1));
-    res.est.kRs = kr(k);
-  else
     res.est.Rs = res.Rs(end-w);
     res.est.kRs = length(res.Rs)-w;
+  else
+    [res.est.Rs,k] = min(res.Rs(kr,1));
+    res.est.kRs = kr(k);
   endif
 
   % Est Rsh
   kr = find(res.Rsh>0);
   if (isempty(kr))
-    vm = median(log(res.Rsh(kr,1)));
-    [v,k] min((log(res.Rsh(kr,1))-vm).^2);
-    res.est.Rsh = res.Rsh(kr(k));
-    res.est.kRsh = kr(k);
-  else
     res.est.Rsh = res.Rsh(w);
     res.est.kRsh = w;
+  else
+    vm = median(log(res.Rsh(kr,1)));
+    [v,k] = min((log(res.Rsh(kr,1))-vm).^2);
+    res.est.Rsh = res.Rsh(kr(k));
+    res.est.kRsh = kr(k);
   endif
 
 endfunction

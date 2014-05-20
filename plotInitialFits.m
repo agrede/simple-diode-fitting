@@ -12,8 +12,8 @@ function res = plotInitialFits(fit)
   subplot(2,2,2);
   plot(fit.vA,fit.n);
   hold on;
-  plot(fit.vA(res.est.krn), fit.n(fit.est.krn), 'ro');
-  plot(fit.vA(res.est.kr), fit.est.n, 'rx');
+  plot(fit.vA(fit.est.krn), fit.n(fit.est.krn), 'ro');
+  plot(fit.vA(fit.est.kn), fit.est.n, 'rx');
   hold off;
   ylabel('n');
 
@@ -21,15 +21,15 @@ function res = plotInitialFits(fit)
   subplot(2,2,3);
   semilogy(fit.vC,fit.Rs);
   hold on;
-  semilogy(fit.vC(fit.est.kRs),fit.est.kRs,'rx');
+  semilogy(fit.vC(fit.est.kRs),fit.est.Rs,'rx');
   hold off;
   ylabel('Rs');
 
   % Plot Rsh
-  subplot(2,2,3);
+  subplot(2,2,4);
   semilogy(fit.vB,fit.Rsh);
   hold on;
-  semilogy(fit.vB(fit.est.kRsh),fit.est.kRsh,'rx');
+  semilogy(fit.vB(fit.est.kRsh),fit.est.Rsh,'rx');
   hold off;
   ylabel('Rsh');
 endfunction

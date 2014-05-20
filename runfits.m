@@ -8,7 +8,7 @@ nms = sort(fieldnames(DF));
 DF.T = input('Temperature [K] = ');
 DF.w = 10;
 nfits = 5;
-DF.Icut = input('Cutoff current [A] = ');
+DF.Icut = inputDefault('Cutoff current [A] = ',nan(1));
 phit = PC.kB.*DF.T./PC.e;
 
 for k1 = 1:length(nms)
@@ -30,20 +30,36 @@ for k1 = 1:length(nms)
       setInit = 1;
       while (setInit == 1)
         DF.(ky).pps{k2} = spline(uV1,mI(:,k2));
-        DF.(ky).ifit{k2} = initialFit(tV,tI(:,k2),DF.w);
-        plotInitialFits(DF.(ky).ifit{k2},phit);
+        DF.(ky).ifit{k2} = initialFit(tV,tI(:,k2),DF.w,phit);
+        plotInitialFits(DF.(ky).ifit{k2});
 
-        DF.(ky).fits(1,1,k2) = input('I0 = ');
-        DF.(ky).fits(2,1,k2) = input('n = ');
-        DF.(ky).fits(3,1,k2) = input('Rs = ');
-        DF.(ky).fits(4,1,k2) = input('Rsh = ');
+
+        DF.(ky).fits(1,1,k2) = inputDefault('I0 [A] =',DF.(ky).ifit{k2}.est.i0);
+        DF.(ky).fits(2,1,k2) = inputDefault('n =',DF.(ky).ifit{k2}.est.n);
+        DF.(ky).fits(3,1,k2) = inputDefault('Rs [Ohms] =',...
+                                            DF.(ky).ifit{k2}.est.Rs);
+        DF.(ky).fits(4,1,k2) = inputDefault('Rsh [Ohms] =',...
+                                            DF.(ky).ifit{k2}.est.Rsh);
 
         subplot(1,1,1);
         semilogy(tV,abs(tI(:,k2)),'k.');
-        ks = 1+ input('Cut off # of points from start = ');
-        ke = size(tI(:,k2),1) - input('Cut off # of points from end = ');
+        kcut = find(abs(tI(:,k2))>=DF.Icut);
+        if (~isempty(kcut))
+          hold on;
+          semilogy(tV((end-length(kcut)):end,1),...
+                   abs(tI((end-length(kcut)):end,k2)),'rx');
+          hold off;
+        endif
+        ylabel('Current [A]');
+        xlabel('Bias [V]');
+        ks = 1+ inputDefault('Cut off # of points from start =',0);
+        ke = size(tI(:,k2),1) - inputDefault(...
+                                      'Cut off # of points from end =',...
+                                      length(kcut));
 
-        DF.(ky).fits(:,2:end,k2) = fitDiode(tV(ks:ke,1),tI(ks:ke,k2),DF.(ky).fits(:,1,k2),phit);
+        DF.(ky).fits(:,2:end,k2) = fitDiode(tV(ks:ke,1),...
+                                            tI(ks:ke,k2),...
+                                            DF.(ky).fits(:,1,k2),phit);
 
         for k3 = 1:nfits
           DF.(ky).fI(:,k3,k2) = diodeCurrent(tV,DF.(ky).fits(:,k3,k2),phit);
