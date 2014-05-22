@@ -1,6 +1,6 @@
-# <NAME> #
+# Simple Diode Fitting #
 
-<FULLNAME>
+Simple Diode Fitting
 
 Initial attempt at fitting diode using simple model:
 

@@ -9,7 +9,7 @@ function res = plotDiodeDeriv(vk,ppm,ppf,order)
   %
   % Copyright (C) 2014 Alex J. Grede
   % GPL v3, See LICENSE.txt for details
-  % This function is part of <NAME> (https://github.com/agrede/<GITHUB>)
+  % This function is part of Simple Diode Fitting (https://github.com/agrede/simple-diode-fitting)
   yf = zeros(length(vk),length(ppf));
   for k=1:size(yf,2)
     yf(:,k) = dydx(vk,ppf{k},order);

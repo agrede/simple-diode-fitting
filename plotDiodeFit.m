@@ -12,7 +12,7 @@ function res = plotDiodeFit(vk,ik,fit,phit,fI)
   %
   % Copyright (C) 2014 Alex J. Grede
   % GPL v3, See LICENSE.txt for details
-  % This function is part of <NAME> (https://github.com/agrede/<GITHUB>)
+  % This function is part of Simple Diode Fitting (https://github.com/agrede/simple-diode-fitting)
   if (nargin<5)
     fI = zeros(size(vk,1),size(fit,2));
 
