@@ -1,3 +1,9 @@
+% RUNFITS is an interactive way to fit data from JSON file
+%
+% Copyright (C) 2014 Alex J. Grede
+% GPL v3, See LICENSE.txt for details
+% This function is part of <NAME> (https://github.com/agrede/<GITHUB>)
+
 PC = physC();
 
 [tmpName,tmpPath] = uigetfile({'*.json','JSON'},'Measurment File');

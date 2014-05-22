@@ -1,4 +1,12 @@
 function res = plotInitialFits(fit)
+  % PLOTINITIALFITS plots i0, n, Rs, Rsh to help with seeding FITDIODE
+  %   RES = PLOTINITIALFITS(FIT)
+  %        FIT = result from INITIALFIT
+  %
+  % Copyright (C) 2014 Alex J. Grede
+  % GPL v3, See LICENSE.txt for details
+  % This function is part of <NAME> (https://github.com/agrede/<GITHUB>)
+
   % Plot I0
   subplot(2,2,1);
   semilogy(fit.vA,fit.i0);

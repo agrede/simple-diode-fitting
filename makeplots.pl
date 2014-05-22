@@ -1,5 +1,12 @@
 #!/usr/bin/perl -w
 
+# Make plots
+# Takes csv outputs from Octave and uses pdflatex with pgfplots to create plot
+#
+# Copyright (C) 2014 Alex J. Grede
+# GPL v3, See LICENSE.txt for details
+# This function is part of <NAME> (https://github.com/agrede/<GITHUB>)
+
 use warnings;
 use strict;
 use File::Copy;

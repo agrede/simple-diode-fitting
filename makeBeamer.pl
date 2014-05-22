@@ -1,5 +1,16 @@
 #!/usr/bin/perl -w
 
+# makeBeamer makes LaTeX beamer code for output (specifically tailored to one
+#   project)
+#
+# Creates slides with two columns:
+#   Plot
+#   Table of parameters and average residuals
+#
+# Copyright (C) 2014 Alex J. Grede
+# GPL v3, See LICENSE.txt for details
+# This function is part of <NAME> (https://github.com/agrede/<GITHUB>)
+
 use warnings;
 use strict;
 

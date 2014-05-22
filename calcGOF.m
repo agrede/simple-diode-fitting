@@ -1,4 +1,18 @@
 function res = calcGOF(DF,nms,imax)
+  % CALCGOF calculates metrics for goodness of fit (GOF)
+  %  RES = CALCGOF(DF, NMS, IMAX)
+  %       DF    struct of fit data
+  %       NMS   cell array of field names of DF that contain fits
+  %       IMAX  current above this level is ignored in calculations
+  %             (hit ceiling of measurement device)
+  %
+  % Calculates GOF for values of V<0, V>0 and combination (V=0 evaluates to -Inf
+  %   on log scale)
+  % Uses general formula rk = (log|ik|-log|i(vk)|)^2
+  %
+  % Copyright (C) 2014 Alex J. Grede
+  % GPL v3, See LICENSE.txt for details
+  % This function is part of <NAME> (https://github.com/agrede/<GITHUB>)
   res = struct;
   for k1 = 1:length(nms)
     ky = nms{k1};

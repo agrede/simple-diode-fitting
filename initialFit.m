@@ -1,5 +1,30 @@
 function res = initialFit(v,i,w,phit)
-  % w is the number of points, like a boxcar average of sorts
+  % INITIALFIT helps with finding seeding values to FITDIODE
+  %  RES = INITIALFIT(V, I, W, PHIT)
+  %       V
+  %       I
+  %       W
+  %       PHIT
+  % Output:
+  %  RES structure with
+  %     A     result of [V(k+(1:W)) 1]\log(I) for positive V (vA)
+  %     B     result of [V(k+(1:W)) 1]\I for negative V (vB)
+  %     C     result of [V(k+(1:W)) 1]\I for positive V (vC)
+  %     I0    Intercept of fit to log(I) = 1/(n*phit)*V + log(I0) in window of
+  %            size w (from A)
+  %     n     Slope of fit to log(I) = 1/(n*phit)*V + log(I0) in window of size
+  %            w (from A)
+  %     Rs    Slope of fit to I = V/Rs+b in window of size w (from C)
+  %     Rsh   Slope of fit to I = V/Rsh+b in window of size w (from B)
+  %     est.* Estimated values for:
+  %       i0 approximation of local min of i0
+  %       n  approximation of local min of n
+  %       Rs minimum value of Rs
+  %       Rsh median value of Rsh
+  %
+  % Copyright (C) 2014 Alex J. Grede
+  % GPL v3, See LICENSE.txt for details
+  % This function is part of <NAME> (https://github.com/agrede/<GITHUB>)
 
   kp = find(v>0);
   kn = find(v<0);

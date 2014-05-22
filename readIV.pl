@@ -1,9 +1,10 @@
 #!/usr/bin/perl -w
 
+# Parses an XLS file for IV data and creates JSON file for use in Octave
 #
 # Copyright (C) 2014 Alex J. Grede
 # GPL v3, See LICENSE.txt for details
-# This function is part of SAMIS (https://github.com/agrede/SAMIS)
+# This function is part of <NAME> (https://github.com/agrede/<GITHUB>)
 
 use warnings;
 use strict;

@@ -1,4 +1,24 @@
 function res = fitDiode(vk,ik,D0,phit)
+  % FITDIODE uses four different methods to find parameters
+  %  RES = FITDIODE(VK, IK, D0, PHIT)
+  %       VK   Measured voltage values
+  %       IK   Measured current values
+  %       D0   Seed value for optimization [i0;n;Rs;Rsh]
+  %       PHIT thermal voltage
+  %  Output:
+  %       RES is a 4x4 matrix with each column the parameters that result from
+  %        each fit method in the order [i0;n;Rs;Rsh]
+  %
+  % Two flavors of fitness functions are used minimizing
+  %   sum(|log|i(vk)|-log|ik|) or
+  %   sum(|1-|i(vk)/ik||)
+  % with two ways of handling Rsh either linearly or exponentially
+  %
+  % Solution relies on measured ik in calculating i(vk) for increased speed
+  %
+  % Copyright (C) 2014 Alex J. Grede
+  % GPL v3, See LICENSE.txt for details
+  % This function is part of <NAME> (https://github.com/agrede/<GITHUB>)
   res = zeros(4,5);
   X0 = [log(D0(1));D0(2);D0(3);D0(4).*1e-6];
   X1 = [log(D0(1));D0(2);D0(3);log(D0(4))];
