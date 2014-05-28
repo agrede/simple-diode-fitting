@@ -36,13 +36,13 @@ function res = initialFit(vk,ik,w,phit)
   if (length(kn) < 2*w)
     B = zeros(2,length(kn));
     if (length(kn) < 1)
-      [res.vB, res.est.kRsh] = min(vk);
+      res.vB = min(vk);
       res.Rsh = 1e9;
       res.est.Rsh = 1e9;
       res.est.kRsh = 1;
     else
       res.vB = vk(kn);
-      res.Rsh = abs(vk(kn)./ik(kp,:));
+      res.Rsh = abs(vk(kn)./ik(kn,:));
       [res.est.Rsh,res.est.kRsh] = max(res.Rsh);
     endif
   else
