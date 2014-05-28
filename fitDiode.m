@@ -19,7 +19,7 @@ function res = fitDiode(vk,ik,D0,phit)
   % Copyright (C) 2014 Alex J. Grede
   % GPL v3, See LICENSE.txt for details
   % This function is part of Simple Diode Fitting (https://github.com/agrede/simple-diode-fitting)
-  res = zeros(4,5);
+  res = zeros(4,4);
   X0 = [log(D0(1));D0(2);D0(3);D0(4).*1e-6];
   X1 = [log(D0(1));D0(2);D0(3);log(D0(4))];
 
