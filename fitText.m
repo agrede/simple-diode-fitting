@@ -43,7 +43,7 @@ function [D, fI] = fitText(path,outpath,Icut)
     semilogy(vk,abs(ik),'k.');
     if (~isempty(kcut))
       hold on;
-      semilogy(vk(kcut,1),abs(ik(kcut,1)),'Rx');
+      semilogy(vk(kcut,1),abs(ik(kcut,1)),'rx');
       hold off;
     endif
     ylabel('Current [A]');
