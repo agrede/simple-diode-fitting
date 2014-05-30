@@ -55,7 +55,7 @@ for k1 = 1:length(nms)
           semilogy(tV((end-length(kcut)):end,1),...
                    abs(tI((end-length(kcut)):end,k2)),'rx');
           hold off;
-        endif
+        end
         ylabel('Current [A]');
         xlabel('Bias [V]');
         ks = 1+ inputDefault('Cut off # of points from start =',0);
@@ -70,11 +70,11 @@ for k1 = 1:length(nms)
         for k3 = 1:nfits
           DF.(ky).fI(:,k3,k2) = diodeCurrent(tV,DF.(ky).fits(:,k3,k2),phit);
           DF.(ky).ppfs{k3,k2} = spline(uV1,DF.(ky).fI(uk1,k3,k2));
-        endfor
+        end
 
         plotDiodeFit(tV,tI(:,k2),[],phit,DF.(ky).fI(:,:,k2));
         setInit = yes_or_no('Re-enter starting conditions?');
-      endwhile
-    endfor
-  endif
-endfor
+      end
+    end
+  end
+end

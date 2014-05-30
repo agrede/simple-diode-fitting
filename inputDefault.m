@@ -16,9 +16,9 @@ function res = inputDefault(str,val)
     sval = val;
   else
     sval = '';
-  endif
+  end
   res = input(strcat(str,' (', sval, ') '));
   if isempty(res)
      res = val;
-  endif
-endfunction
+  end
+end

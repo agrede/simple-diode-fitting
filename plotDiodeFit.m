@@ -18,12 +18,12 @@ function res = plotDiodeFit(vk,ik,fit,phit,fI)
 
     for k=1:size(fit,2)
       fI(:,k) = diodeCurrent(vk,fit(:,k),phit);
-    endfor
-  endif
+    end
+  end
 
   semilogy(vk,abs(ik),'k.');
   hold on;
   semilogy(vk,abs(fI));
   hold off;
 
-endfunction
+end

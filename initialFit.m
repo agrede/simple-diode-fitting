@@ -44,13 +44,13 @@ function res = initialFit(vk,ik,w,phit)
       res.vB = vk(kn);
       res.Rsh = abs(vk(kn)./ik(kn,:));
       [res.est.Rsh,res.est.kRsh] = max(res.Rsh);
-    endif
+    end
   else
     B = zeros(2,length(kn)-1-2*w); % used to calculate Rsh at each point
     for k=1:size(B,2)
       kw = kn(k-1+(1:w),1);
       B(:,k) = [vk(kw,1) ones(size(kw))]\ik(kw,1);
-    endfor
+    end
     res.vB = vk(kn(ceil(0.5.*w)+(1:size(B,2))),1);
     res.Rsh = 1./res.B(1,:)';
 
@@ -64,8 +64,8 @@ function res = initialFit(vk,ik,w,phit)
       [v,k] = min((log(res.Rsh(kr,1))-vm).^2);
       res.est.Rsh = res.Rsh(kr(k));
       res.est.kRsh = kr(k);
-    endif
-  endif
+    end
+  end
 
   A = zeros(2,length(kp)-1-2*w); % used to calculate n and i0 at each point
                                  % after an inflection in n(V), Rs dominates
@@ -78,7 +78,7 @@ function res = initialFit(vk,ik,w,phit)
     kw = kp((1:w)+k+w-2,1);
     A(:,k) = [vk(kw,1) ones(size(kw))]\log(ik(kw,1));
     C(:,k) = [vk(kw,1) ones(size(kw))]\ik(kw,1);
-  endfor
+  end
 
   res.A = A;
   res.B = B;
@@ -100,7 +100,7 @@ function res = initialFit(vk,ik,w,phit)
     rhigh = min(ceil(w./2)+ceil(median(lmin)),length(res.i0));
     res.est.kri0 = rlow:1:rhigh;
     [v,k] = min(res.A(2,res.est.kri0),[],2);
-  endif
+  end
   res.est.ki0 = res.est.kri0(k);
   res.est.i0 = exp(v);
 
@@ -117,7 +117,7 @@ function res = initialFit(vk,ik,w,phit)
     rhigh = min(ceil(w./2)+ceil(median(lmin)),length(res.n));
     res.est.krn = rlow:1:rhigh;
     [v,k] = min(res.n(res.est.krn,1));
-  endif
+  end
   res.est.kn = res.est.krn(k);
   res.est.n = v;
 
@@ -129,7 +129,7 @@ function res = initialFit(vk,ik,w,phit)
   else
     [res.est.Rs,k] = min(res.Rs(kr,1));
     res.est.kRs = kr(k);
-  endif
+  end
 
 
-endfunction
+end

@@ -40,4 +40,4 @@ function C = physC()
   C.kB = 1.3806488e-23;
   C.Uncertainty.kB = 0.0000013e-23;
 
-endfunction
+end

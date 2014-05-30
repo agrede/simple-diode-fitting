@@ -40,6 +40,6 @@ function res = calcGOF(DF,nms,imax)
       res.(ky).SSres(1,:,k2) = sum((tIn(:,o2)-tfIn).^2)./length(kn);
       res.(ky).SSres(2,:,k2) = sum((tIp(:,o2)-tfIp).^2)./length(kp);
       res.(ky).SSres(3,:,k2) = sum((tIa(:,o2)-tfIa).^2)./length(ka);
-    endfor
-  endfor
-endfunction
+    end
+  end
+end

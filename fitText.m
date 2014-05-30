@@ -45,7 +45,7 @@ function [D, fI] = fitText(path,outpath,Icut)
       hold on;
       semilogy(vk(kcut,1),abs(ik(kcut,1)),'rx');
       hold off;
-    endif
+    end
     ylabel('Current [A]');
     xlabel('Bias [V]');
 
@@ -54,13 +54,13 @@ function [D, fI] = fitText(path,outpath,Icut)
     D(:,2:end) = fitDiode(vk(kkeep,1),ik(kkeep,1),D(:,1),phit);
     for k3 = 1:nfits
       fI(:,k3) = diodeCurrent(vk,D(:,k3),phit);
-    endfor
+    end
 
     plotDiodeFit(vk,ik,[],phit,fI);
     setInit = yes_or_no('Re-enter starting conditions?');
-  endwhile
+  end
 
   csvwrite(strcat(outpath,'fit.csv'),[vk,fI]);
   csvwrite(strcat(outpath,'fitParams.csv'),D);
 
-endfunction
+end

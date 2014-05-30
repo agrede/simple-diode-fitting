@@ -22,4 +22,4 @@ function i = diodeCurrent(v,D0,phit)
   for k=1:length(v)
     i(k) = fsolve(@(i) i-f(i,v(k)),ig(k));
   end
-endfunction
+end

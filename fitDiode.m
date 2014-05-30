@@ -54,4 +54,4 @@ function res = fitDiode(vk,ik,D0,phit)
   % M = fminunc(R5,X1);
   % res(:,5) = H1(M);
 
-endfunction
+end

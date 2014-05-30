@@ -27,11 +27,11 @@ function yp = dydx(x,pp,order)
       ytmp  = [6.*pp.coefs(:,1);6.*pp.breaks(end).*pp.coefs(end,1)+2.*pp.coefs(end,2)];
       pptmp = interp1(pp.breaks',ytmp,'spline','pp');
       yp(end) = (pptmp.coefs(end,:).*X(end,:))*D(:,2);
-    endif
+    end
   else % Use derivative and calculate the higher order derivative from this
     DE = [1 0 0 0];
     ytmp  = [6.*pp.coefs(:,1);6.*pp.breaks(end).*pp.coefs(end,1)+2.*pp.coefs(end,2)];
     pptmp = interp1(pp.breaks',ytmp,'spline','pp');
     yp = dydx(x,pptmp,order-2);
-  endif
-endfunction
+  end
+end

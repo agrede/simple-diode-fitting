@@ -40,4 +40,4 @@ function res = plotInitialFits(fit)
   semilogy(fit.vB(fit.est.kRsh),fit.est.Rsh,'rx');
   hold off;
   ylabel('Rsh');
-endfunction
+end
